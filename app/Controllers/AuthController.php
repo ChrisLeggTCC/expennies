@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\Entity\User;
+use Doctrine\ORM\EntityManager;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 use Slim\Views\Twig;
 
-class AuthController
+class  AuthController
 {
-    public function __construct(private readonly Twig $twig)
+    public function __construct(private readonly Twig $twig, private readonly EntityManager $entityManager)
     {
 
     }
@@ -30,11 +31,12 @@ class AuthController
     {
         $data = $request->getParsedBody();
         $user = new User();
+
         $user->setName($data['name']);
         $user->setEmail($data['email']);
-        $user->setPassword($data['password']);
-        print_r($data);
-        exit();
+        $user->setPassword(password_hash($data['password'], PASSWORD_BCRYPT,['cost'=>12]));
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
         return $response;
     }
 }
