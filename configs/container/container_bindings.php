@@ -7,6 +7,7 @@ use App\Enum\AppEnvironment;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMSetup;
 use Psr\Container\ContainerInterface;
+use Psr\Http\Message\ResponseFactoryInterface;
 use Slim\App;
 use Slim\Factory\AppFactory;
 use Slim\Views\Twig;
@@ -62,4 +63,5 @@ return [
     new EntrypointLookup(BUILD_PATH . '/entrypoints.json'),
     $container->get('webpack_encore.packages')
 ),
+    ResponseFactoryInterface::class => fn(App $app) => $app->getResponseFactory(),
 ];

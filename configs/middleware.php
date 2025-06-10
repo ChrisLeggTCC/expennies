@@ -15,7 +15,7 @@ return function (App $app) {
     // Twig
     $app->add(TwigMiddleware::create($app, $container->get(Twig::class)));
 
-//    $app->add(ValidationExceptionMiddleware::class);
+    $app->add(ValidationExceptionMiddleware::class);
 
     // Logger
     $app->addErrorMiddleware(

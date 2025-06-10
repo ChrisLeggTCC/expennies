@@ -48,10 +48,7 @@ class  AuthController
             echo 'All good';
         } else {
             throw new ValidationException($v->errors());
-            print_r($v->errors());
         }
-
-        exit();
 
         $user = new User();
 

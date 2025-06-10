@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Middleware;
 
@@ -21,10 +21,9 @@ class ValidationExceptionMiddleware implements MiddlewareInterface
     {
         try {
             return $handler->handle($request);
-        } catch(ValidationException $e) {
+        } catch (ValidationException $e) {
             $response = $this->responseFactory->createResponse();
-            $referer  = $request->getServerParams()['HTTP_REFERER'];
-
+            $referer = $request->getServerParams()['HTTP_REFERER'];
             return $response->withHeader('Location', $referer)->withStatus(302);
         }
     }
